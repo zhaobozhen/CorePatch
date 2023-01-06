@@ -94,6 +94,14 @@ public class CorePatchForR extends XposedHelper implements IXposedHookLoadPackag
                 }
             }
         });
+        hookAllMethods("android.content.pm.SigningDetails", loadPackageParam.classLoader, "hasCommonAncestor", new XC_MethodHook() {
+            @Override
+            protected void beforeHookedMethod(MethodHookParam param) {
+                if (prefs.getBoolean("authcreak", true)) {
+                     param.setResult(true);
+                }
+            }
+        });
 
         // 当verifyV1Signature抛出转换异常时，替换一个签名作为返回值
         // 如果用户已安装apk，并且其定义了私有权限，则安装时会因签名与模块内硬编码的不一致而被拒绝。尝试从待安装apk中获取签名。如果其中apk的签名和已安装的一致（只动了内容）就没有问题。此策略可能有潜在的安全隐患。
