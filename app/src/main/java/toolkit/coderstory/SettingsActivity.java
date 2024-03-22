@@ -65,7 +65,7 @@ public class SettingsActivity extends Activity {
 
         @Override
         public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-            if (key.equals("UsePreSig") && sharedPreferences.getBoolean(key,false)) {
+            if ("UsePreSig".equals(key) && sharedPreferences.getBoolean(key,false)) {
                 try {
                     final ClassLoader cl = getActivity().getClassLoader();
                     @SuppressLint("PrivateApi") final Class<?> SystemProperties = cl.loadClass("android.os.SystemProperties");
